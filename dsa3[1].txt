@@ -1,0 +1,250 @@
+#include<iostream>
+#include<stdlib.h>
+#include<string.h>
+
+using namespace std;
+
+struct node {
+    char name[20];
+    node *next;
+    node *down;
+    int flag;
+};
+
+class Gll {
+    char ch[20];
+    int n, i;
+    node *head = NULL, *temp = NULL, *t1 = NULL, *t2 = NULL;
+
+public:
+    node *create();
+    void insertb();
+    void insertc();
+    void inserts();
+    void insertss();
+    void displayb();
+};
+
+node* Gll::create() {
+    node *p = new(struct node);
+    p->next = NULL;
+    p->down = NULL;
+    p->flag = 0;
+    cout << "\n enter the name";
+    cin >> p->name;
+    return p;
+}
+
+void Gll::insertb() {
+    if(head == NULL) {
+        t1 = create();
+        head = t1;
+    } else {
+        cout << "\n book exist";
+    }
+}
+
+void Gll::insertc() {
+    if(head == NULL) {
+        cout << "\n there is no book";
+    } else {
+        cout << "\n how many chapters you want to insert";
+        cin >> n;
+        for(i = 0; i < n; i++) {
+            t1 = create();
+            if(head->flag == 0) {
+                head->down = t1;
+                head->flag = 1;
+            } else {
+                temp = head;
+                temp = temp->down;
+                while(temp->next != NULL)
+                    temp = temp->next;
+                temp->next = t1;
+            }
+        }
+    }
+}
+
+void Gll::inserts() {
+    if(head == NULL) {
+        cout << "\n there is no book";
+    } else {
+        cout << "\n Enter the name of chapter on which you want to enter the section : ";
+        cin>>ch;
+        temp = head;
+        if(temp->flag == 0) {
+            cout << "\n there are no chapters on in book";
+        } else {
+            temp = temp->down;
+            while(temp != NULL) {
+                if(!strcmp(ch, temp->name)) {
+                    cout << "\n how many sections you want to enter";
+                    cin >> n;
+                    for(i = 0; i < n; i++) {
+                        t1 = create();
+                        if(temp->flag == 0) {
+                            temp->down = t1;
+                            temp->flag = 1;
+                            cout << "\n******";
+                            t2 = temp->down;
+                        } else {
+                            cout << "\n#####";
+                            while(t2->next != NULL) {
+                                t2 = t2->next;
+                            }
+                            t2->next = t1;
+                        }
+                    }
+                    break;
+                }
+                temp = temp->next;
+            }
+        }
+    }
+}
+
+void Gll::insertss() {
+    if(head == NULL) {
+        cout << "\n there is no book";
+    } else {
+        cout << "\n Enter the name of chapter on which you want to enter the section : ";
+        cin >>ch;
+        temp = head;
+        if(temp->flag == 0) {
+            cout << "\n there are no chapters on in book";
+        } else {
+            temp = temp->down;
+            while(temp != NULL) {
+                if(!strcmp(ch, temp->name)) {
+                    cout << "\n enter name of section in which you want to enter the sub section";
+                    cin >> ch;
+                    if(temp->flag == 0) {
+                        cout << "\n there are no sections ";
+                    } else {
+                        temp = temp->down;
+                        while(temp != NULL) {
+                            if(!strcmp(ch, temp->name)) {
+                                cout << "\n how many subsections you want to enter";
+                                cin >> n;
+                                for(i = 0; i < n; i++)
+                                    t1 = create();
+                                if(temp->flag == 0) {
+                                    temp->down = t1;
+                                    temp->flag = 1;
+                                    cout << "\n******";
+                                    t2 = temp->down;
+                                } else {
+                                    cout << "\n#####";
+                                    while(t2->next != NULL) {
+                                        t2 = t2->next;
+                                    }
+                                    t2->next = t1;
+                                }
+                                break;
+                            }
+                            temp = temp->next;
+                        }
+                    }
+                    break;
+                }
+                temp = temp->next;
+            }
+        }
+    }
+}
+
+void Gll::displayb() {
+    if(head == NULL) {
+        cout << "\n book not exist";
+    } else {
+        temp = head;
+        cout << "\n NAME OF BOOK: " << temp->name;
+        if(temp->flag == 1) {
+            temp = temp->down;
+            while(temp != NULL) {
+                cout << "\n\t\tNAME OF CHAPTER: " << temp->name;
+                t1 = temp;
+                if(t1->flag == 1) {
+                    t1 = t1->down;
+                    while(t1 != NULL) {
+                        cout << "\n\t\t\t\tNAME OF SECTION: " << t1->name;
+                        t2 = t1;
+                        if(t2->flag == 1) {
+                            t2 = t2->down;
+                            while(t2 != NULL) {
+                                cout << "\n\t\t\t\t\t\tNAME OF SUBSECTION: " << t2->name;
+                                t2 = t2->next;
+                            }
+                        }
+                        t1 = t1->next;
+                    }
+                }
+                temp = temp->next;
+            }
+        }
+    }
+}
+
+int main() {
+    Gll g;
+    int x;
+    while(1) {
+        cout << "\n\n enter your choice";
+        cout << "\n 1.insert book";
+        cout << "\n 2.insert chapter";
+        cout << "\n 3.insert section";
+        cout << "\n 4.insert subsection";
+        cout << "\n 5.display book";
+        cout << "\n 6.exit";
+        cin >> x;
+        switch(x) {
+            case 1: g.insertb();
+                    break;
+            case 2: g.insertc();
+                    break;
+            case 3: g.inserts();
+                    break;
+            case 4: g.insertss();
+                    break;
+            case 5: g.displayb();
+                    break;
+            case 6: exit(0);
+        }
+    }
+    return 0;
+}
+	
+
+
+
+
+
+
+
+
+
+
+
+/*Introduction to Tree:
+ Definition: A tree T is a set of nodes storing elements such that the nodes have a parent-child relationship that satisfies the following • if T is not empty, T has a special tree called the root that has no parent • each node v of T different than the root has a unique parent node w; each node with parent w is a child of w 
+Recursive definition • 
+T is either empty • or consists of a node r (the root) and a possibly empty set of trees whose roots are the children of r
+
+Important Terms 
+Following are the important terms with respect to tree. 
+* Path ? Path refers to the sequence of nodes along the edges of a tree.
+ * Root ? The node at the top of the tree is called root. There is only one root per tree and one path from the root node to any node. 
+* Parent ? Any node except the root node has one edge upward to a node called parent. 
+* Child ? The node below a given node connected by its edge downward is called its child node. 
+* Leaf ? The node which does not have any child node is called the leaf node. 
+* Subtree ? Subtree represents the descendants of a node. 
+* Visiting ? Visiting refers to checking the value of a node when control is on the node. 
+* Traversing ? Traversing means passing through nodes in a specific order. 
+* Levels ? Level of a node represents the generation of a node. If the root node is at level 0, then its next child node is at level 1, its grandchild is at level 2, and so on. 
+* keys ? Key represents a value of a node based on which a search operation is to be carried out for a node. 
+Advantages of trees 
+Trees are so useful and frequently used, because they have some very serious advantages:
+ * Trees reflect structural relationships in the data 
+* Trees are used to represent hierarchies * Trees provide an efficient insertion and searching 
+* Trees are very flexible data, allowing to move subtrees around with minumum effort*/

@@ -1,0 +1,70 @@
+/*Given sequence k = k1 <k2< …*/
+
+#include <bits/stdc++.h>
+using namespace std;
+int sum(int frequency[], int i, int j)
+{
+    int sum = 0;
+    for (int x = i; x <= j; x++)
+        sum += frequency[x];
+    return sum;
+}
+int optimalCost(int frequency[], int i, int j)
+{
+    if (j < i)
+        return 0;
+    if (j == i)
+        return frequency[i];
+
+    int frequencySum = sum(frequency, i, j);
+
+    int min = INT_MAX;
+
+    for (int r = i; r <= j; ++r)
+    {
+        int cost = optimalCost(frequency, i, r - 1) + optimalCost(frequency, r + 1, j);
+        if (cost < min)
+            min = cost;
+    }
+
+    return min + frequencySum;
+}
+int optimalSearchTree(int keys[], int frequency[], int n)
+{
+    return optimalCost(frequency, 0, n - 1);
+}
+int main()
+{
+    int keys[] = {10, 12, 20};
+    int frequency[] = {34, 8, 50};
+    int n = sizeof(keys) / sizeof(keys[0]);
+    cout << "Cost of Optimal BST is " << optimalSearchTree(keys, frequency, n);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+/*An optimal binary search tree is a binary search tree for which the nodes are arranged on levels such that the tree cost is minimum. For the purpose of a better presentation of optimal binary search trees, we will consider “extended binary search trees”, which have the keys stored at their internal nodes. Suppose “n” keys k1, k2, … k n are stored at the internal nodes of a binary search tree. It is assumed that the keys are given in sorted order, so that k1<k2< … < kn.
+
+In the extended tree: 
+* The squares represent terminal nodes. These terminal nodes represent unsuccessful searches of the tree for key values. The searches did not end successfully, that is, because they represent key values that are not actually stored in the tree; 
+* The round nodes represent internal nodes; these are the actual keys stored in the tree; 
+* Assuming that the relative frequency with which each key value is accessed is known, weights can be assigned to each node of the extended tree (p1 … p6). They represent the relative frequencies of searches terminating at each node, that is, they mark the successful searches. 
+* If the user searches a particular key in the tree, 2 cases can occur: 
+* 1 – the key is found, so the corresponding weight ‘p’ is incremented; 
+* 2 – the key is not found, so the corresponding ‘q’ value is incremented
+
+GENERALIZATION: 
+The terminal node in the extended tree that is the left successor of k1 can be interpreted as representing all key values that are not stored and are less than k1. Similarly, the terminal node in the extended tree that is the right successor of kn, represents all key values not stored in the tree that are greater than kn. The terminal node that is successes between ki and ki-1 in an inorder traversal represent all key values not stored that lie between ki and ki - 1.*/
+
+
+
+
+
+
